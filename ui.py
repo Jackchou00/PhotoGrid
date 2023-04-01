@@ -1,6 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtWidgets import QFileDialog, QLineEdit, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget
+from PyQt6.QtWidgets import QFileDialog, QLineEdit, QPushButton
 from image_process import process_image
 
 class MyWindow(QWidget):
@@ -40,4 +40,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MyWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
