@@ -6,19 +6,21 @@ from image_process import process_image
 class MyWindow(QWidget):
     def __init__(self):
         super().__init__()
-       
+        self.initUI()
+
+    def initUI(self):  
         # 添加控件
         self.path_edit = QLineEdit(self)
         self.path_btn = QPushButton('选择文件夹', self)
+        self.run_btn = QPushButton('运行程序', self)
 
         # 设置控件位置
         self.path_edit.setGeometry(10, 10, 200, 30)
         self.path_btn.setGeometry(220, 10, 100, 30)
-
-        # 连接信号与槽
-        self.path_btn.clicked.connect(self.show_file_dialog)
-        self.run_btn = QPushButton('运行程序', self)
         self.run_btn.setGeometry(10, 50, 100, 30)
+
+        # 连接函数
+        self.path_btn.clicked.connect(self.show_file_dialog)
         self.run_btn.clicked.connect(self.run_program)
 
     def show_file_dialog(self):
@@ -32,6 +34,7 @@ class MyWindow(QWidget):
         """ 运行程序 """
         path = self.path_edit.text()
         if not path:
+            self.path_edit.setPlaceholderText('请选择文件夹')
             return
         res_img = process_image(path)
         res_img.show()
