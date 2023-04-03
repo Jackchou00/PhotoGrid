@@ -13,15 +13,19 @@ class MyWindow(QWidget):
 
         # 添加控件
         self.path_edit = QLineEdit(self)
+        self.path_edit.setPlaceholderText('请选择文件夹')
         self.path_btn = QPushButton('选择文件夹', self)
         self.run_btn = QPushButton('运行程序', self)
         self.quit_btn = QPushButton('退出程序', self)
+        self.num_edit = QLineEdit(self)
+        self.num_edit.setPlaceholderText('每行图片数量')
 
         # 设置控件位置
         self.path_edit.setGeometry(10, 10, 200, 30)
         self.path_btn.setGeometry(220, 10, 100, 30)
         self.run_btn.setGeometry(10, 50, 100, 30)
         self.quit_btn.setGeometry(120, 50, 100, 30)
+        self.num_edit.setGeometry(230, 50, 90, 30)
 
         # 连接信号与槽
         self.path_btn.clicked.connect(self.show_file_dialog)
@@ -48,10 +52,10 @@ class MyWindow(QWidget):
     def run_program(self):
         """ 运行程序 """
         path = self.path_edit.text()
-        if not path:
-            self.path_edit.setPlaceholderText('请选择文件夹')
+        num = self.num_edit.text()
+        if not path or not num:
             return
-        res_img = process_image(path)
+        res_img = process_image(path, num)
         res_img.show()
 
 if __name__ == '__main__':

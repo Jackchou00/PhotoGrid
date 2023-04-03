@@ -1,7 +1,7 @@
 from PIL import Image
 import os
 
-def process_image(img_path):
+def process_image(img_path, num):
     """ 处理图片 """
     # ...
     # 设置大图中每个小图的大小
@@ -16,11 +16,13 @@ def process_image(img_path):
 
     # 获取目标文件夹中所有图片路径
     path = img_path
+    col_num = int(num)
+
     imgs = sorted(get_image_paths(path))
 
     # 计算大图的大小
-    rows = (len(imgs) - 1) // 7 + 1
-    result_size = (size[0] * 7, size[1] * rows)
+    rows = (len(imgs) - 1) // col_num + 1
+    result_size = (size[0] * col_num, size[1] * rows)
 
     # 创建空白大图
     result_img = Image.new('RGB', result_size, 'white')
@@ -29,8 +31,8 @@ def process_image(img_path):
     for i, img_path in enumerate(imgs):
         with Image.open(img_path).copy() as img:
             img.thumbnail(size)
-            x = (i % 7) * size[0]
-            y = (i // 7) * size[1]
+            x = (i % col_num) * size[0]
+            y = (i // col_num) * size[1]
             if img.size[0] > img.size[1]:
                 offset = ((size[0] - img.size[0]) // 2, (size[1] - img.size[1]) // 2)
             else:
