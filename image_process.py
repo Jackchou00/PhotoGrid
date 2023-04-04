@@ -1,12 +1,12 @@
 from PIL import Image
 import os
 
-def process_image(img_path, num):
+def process_image(img_path, num, space):
     """ 处理图片 """
     # ...
     # 设置大图中每个小图的大小
     size = (1920, 1920)
-
+    
     def get_image_paths(path):
         """ 返回路径下所有图片的完整路径 """
         for file_name in os.listdir(path):
@@ -17,12 +17,13 @@ def process_image(img_path, num):
     # 获取目标文件夹中所有图片路径
     path = img_path
     col_num = int(num)
+    space = int(space)
 
     imgs = sorted(get_image_paths(path))
 
     # 计算大图的大小
-    rows = (len(imgs) - 1) // col_num + 1
-    result_size = (size[0] * col_num, size[1] * rows)
+    row_num = (len(imgs) - 1) // col_num + 1
+    result_size = (size[0] * col_num + space * (col_num + 1), size[1] * row_num + space * (row_num + 1))
 
     # 创建空白大图
     result_img = Image.new('RGB', result_size, 'white')
@@ -31,8 +32,8 @@ def process_image(img_path, num):
     for i, img_path in enumerate(imgs):
         with Image.open(img_path).copy() as img:
             img.thumbnail(size)
-            x = (i % col_num) * size[0]
-            y = (i // col_num) * size[1]
+            x = (i % col_num) * (size[0] + space) + space
+            y = (i // col_num) * (size[1] + space) + space
             if img.size[0] > img.size[1]:
                 offset = ((size[0] - img.size[0]) // 2, (size[1] - img.size[1]) // 2)
             else:

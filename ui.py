@@ -20,6 +20,8 @@ class MyWindow(QWidget):
         self.quit_btn = QPushButton('退出程序', self)
         self.num_edit = QLineEdit(self)
         self.num_edit.setPlaceholderText('每行图片数量')
+        self.space_edit = QLineEdit(self)
+        self.space_edit.setPlaceholderText('图片间距')
 
         '''
         # 设置控件位置
@@ -30,11 +32,12 @@ class MyWindow(QWidget):
         self.num_edit.setGeometry(230, 50, 90, 30) 
         '''
 
-        self.grid.addWidget(self.path_edit, 0, 0, 1, 2)
-        self.grid.addWidget(self.path_btn, 0, 2, 1, 1)
+        self.grid.addWidget(self.path_edit, 0, 0, 1, 3)
+        self.grid.addWidget(self.path_btn, 0, 3, 1, 1)
         self.grid.addWidget(self.num_edit, 1, 0, 1, 1)
-        self.grid.addWidget(self.run_btn, 1, 1, 1, 1)
-        self.grid.addWidget(self.quit_btn, 1, 2, 1, 1)
+        self.grid.addWidget(self.space_edit, 1, 1, 1, 1)
+        self.grid.addWidget(self.run_btn, 1, 2, 1, 1)
+        self.grid.addWidget(self.quit_btn, 1, 3, 1, 1)
 
         # 连接信号与槽
         self.path_btn.clicked.connect(self.show_file_dialog)
@@ -53,9 +56,10 @@ class MyWindow(QWidget):
         """ 运行程序 """
         path = self.path_edit.text()
         num = self.num_edit.text()
-        if not path or not num:
+        space = self.space_edit.text()
+        if not path or not num or not space:
             return
-        res_img = process_image(path, num)
+        res_img = process_image(path, num, space)
         res_img.show()
 
 if __name__ == '__main__':
