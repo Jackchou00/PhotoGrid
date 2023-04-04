@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget
-from PyQt6.QtWidgets import QFileDialog, QLineEdit, QPushButton
+from PyQt6.QtWidgets import QFileDialog, QLineEdit, QPushButton, QGridLayout
 from image_process import process_image
 
 class MyWindow(QWidget):
@@ -10,7 +10,8 @@ class MyWindow(QWidget):
 
     def initUI(self): 
         self.setWindowTitle('PhotoGrid') 
-
+        self.grid = QGridLayout()
+        self.setLayout(self.grid)
         # 添加控件
         self.path_edit = QLineEdit(self)
         self.path_edit.setPlaceholderText('请选择文件夹')
@@ -20,27 +21,26 @@ class MyWindow(QWidget):
         self.num_edit = QLineEdit(self)
         self.num_edit.setPlaceholderText('每行图片数量')
 
+        '''
         # 设置控件位置
         self.path_edit.setGeometry(10, 10, 200, 30)
         self.path_btn.setGeometry(220, 10, 100, 30)
         self.run_btn.setGeometry(10, 50, 100, 30)
         self.quit_btn.setGeometry(120, 50, 100, 30)
-        self.num_edit.setGeometry(230, 50, 90, 30)
+        self.num_edit.setGeometry(230, 50, 90, 30) 
+        '''
+
+        self.grid.addWidget(self.path_edit, 0, 0, 1, 2)
+        self.grid.addWidget(self.path_btn, 0, 2, 1, 1)
+        self.grid.addWidget(self.num_edit, 1, 0, 1, 1)
+        self.grid.addWidget(self.run_btn, 1, 1, 1, 1)
+        self.grid.addWidget(self.quit_btn, 1, 2, 1, 1)
 
         # 连接信号与槽
         self.path_btn.clicked.connect(self.show_file_dialog)
         self.run_btn.clicked.connect(self.run_program)
         self.quit_btn.clicked.connect(QApplication.instance().quit)
-
-        self.center()
         self.show()
-
-    def center(self):
-        """ 窗口居中显示 """
-        screen = self.frameGeometry()
-        center_point = self.screen().availableGeometry().center()
-        screen.moveCenter(center_point)
-        self.move(screen.topLeft())
 
     def show_file_dialog(self):
         """ 显示文件选择器 """
