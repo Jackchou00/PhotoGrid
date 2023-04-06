@@ -8,4 +8,7 @@ Only very basic functions have been done.
 - A very simple PyQt GUI created by ChatGPT mainly. 
 ## Usage	
 `python ui.py`	
+## Things TODO	
+1. Add a progress bar while processing.
+2. Give user a preview before formally generate.
     
